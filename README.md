@@ -1,4 +1,4 @@
 # pegelalarm_public_pas_doc
 This projects holds the public documentation for the PegelAlarm Server API
 
-# Test 12
+# See the Wiki of this project to read the documentation!
