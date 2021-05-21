@@ -2,14 +2,9 @@ import requests
 import json
 import pandas as pd
 import auth_token_generator as alg
-import datetime
-
-# Enter your private data here
-username = "username"
-password = "password"
 
 
-class BasicApiUsage(object):
+class BasicApiAccess(object):
     xAuthToken = None
 
     def __init__(self, usr, pwd):
@@ -19,9 +14,9 @@ class BasicApiUsage(object):
         }
         self.xAuthToken = self.get_xauth_token(credentials)
 
-    def get_xauth_token(self, credentials_int):
-        api_key = self.get_api_key(credentials_int)
-        x_auth_token = alg.AuthTokenGenerator().calcXAuthToken(username, api_key)
+    def get_xauth_token(self, credentials):
+        api_key = self.get_api_key(credentials)
+        x_auth_token = alg.AuthTokenGenerator().calc_xauth_token(credentials["username"], api_key)
         return x_auth_token
 
     @staticmethod
@@ -75,16 +70,3 @@ class BasicApiUsage(object):
         else:
             print("Failed to call API: " + response.url)
         return None
-
-
-if __name__ == '__main__':
-    bau = BasicApiUsage(username, password)
-
-    currentStationData = bau.query_current_data(station_name="Linz", water_name="Donau")
-    print("Result: " + str(currentStationData["stations"][0]))
-    result0CommonId = currentStationData["stations"][0]["commonid"]
-
-    loadStartDate = datetime.datetime(2020, 5, 31, 10, 30)
-    loadEndDate = datetime.datetime(2020, 5, 31, 16, 45)
-    df = bau.query_historic_data(result0CommonId, loadStartDate, loadEndDate)
-    print("Result: " + str(df))
